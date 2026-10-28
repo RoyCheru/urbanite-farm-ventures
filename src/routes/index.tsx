@@ -73,7 +73,7 @@ function Header() {
   return (
     <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-300", scrolled || open ? "bg-background/95 shadow-sm backdrop-blur" : "bg-transparent")}>
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 lg:flex lg:justify-between">
-        <div className={cn("min-w-0", !(scrolled || open) && "[&_span]:text-deep-foreground")}><Logo /></div>
+        <div className="min-w-0"><Logo light={!(scrolled || open)} /></div>
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
           {NAV.map((n) => (
             <a key={n.href} href={n.href} className={cn("text-sm font-semibold transition-colors hover:text-accent", scrolled ? "text-foreground" : "text-deep-foreground")}>{n.label}</a>
