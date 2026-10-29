@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Catalogue data lives in `src/lib/catalog.ts`, basket state in `src/lib/basket.tsx` (localStorage), enquiry schema + `submitEnquiry` stub in `src/lib/enquiry.ts`; why: swap these modules for backend calls without touching pages.
+- Product prices stay `null` ("Request a Quote") unless the farm supplies real figures; why: no invented prices or claims.

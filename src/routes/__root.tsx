@@ -10,6 +10,9 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { BasketProvider } from "@/lib/basket";
+import { Header, Footer, FloatingWhatsApp } from "@/components/site/layout";
+import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -116,7 +119,15 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <BasketProvider>
+        <div className="min-h-screen bg-background text-foreground">
+          <Header />
+          <main><Outlet /></main>
+          <Footer />
+          <FloatingWhatsApp />
+        </div>
+        <Toaster position="top-center" />
+      </BasketProvider>
     </QueryClientProvider>
   );
 }

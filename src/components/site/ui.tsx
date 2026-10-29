@@ -1,4 +1,5 @@
 import type { ReactNode, AnchorHTMLAttributes } from "react";
+import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { whatsappLink, FACEBOOK_URL, INSTAGRAM_URL } from "@/lib/site";
 
@@ -53,7 +54,7 @@ export function SectionHeading({ eyebrow, title, text, light, center = true }: {
 
 export function Logo({ light }: { light?: boolean }) {
   return (
-    <a href="#home" className="flex min-w-0 items-center gap-2.5" aria-label="Urbanite Farm Ventures home">
+    <Link to="/" className="flex min-w-0 items-center gap-2.5" aria-label="Urbanite Farm Ventures home">
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
       </span>
@@ -61,7 +62,7 @@ export function Logo({ light }: { light?: boolean }) {
         <span className={cn("block truncate font-display text-lg font-semibold", light ? "text-deep-foreground" : "text-foreground")}>Urbanite</span>
         <span className={cn("block truncate text-[10px] font-bold uppercase tracking-[0.2em]", light ? "text-accent" : "text-primary")}>Farm Ventures</span>
       </span>
-    </a>
+    </Link>
   );
 }
 
