@@ -25,7 +25,6 @@ export const Route = createFileRoute("/basket")({
 function BasketPage() {
   const { items, ready, update, remove, clear } = useBasket();
   const [submitted, setSubmitted] = useState(false);
-  const snapshot = items;
 
   return (
     <>
@@ -35,9 +34,7 @@ function BasketPage() {
         <div className="mx-auto max-w-7xl px-5">
           {!ready ? (
             <div className="space-y-4">{[0, 1].map((i) => <Skeleton key={i} className="h-28 w-full rounded-2xl" />)}</div>
-          ) : submitted ? (
-            <EnquiryForm basketItems={[]} />
-          ) : items.length === 0 ? (
+          ) : items.length === 0 && !submitted ? (
             <div className="mx-auto max-w-md rounded-3xl border border-dashed border-border bg-card p-10 text-center">
               <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-secondary text-primary"><ShoppingBasket className="h-7 w-7" /></span>
               <h2 className="mt-5 text-2xl font-semibold">Your basket is empty</h2>
@@ -45,8 +42,8 @@ function BasketPage() {
               <Link to="/products" className="mt-6 inline-flex rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">Browse products</Link>
             </div>
           ) : (
-            <div className="grid gap-10 lg:grid-cols-[1fr_1.3fr]">
-              <div>
+            <div className={submitted ? "mx-auto max-w-3xl" : "grid gap-10 lg:grid-cols-[1fr_1.3fr]"}>
+              {!submitted && <div>
                 <div className="flex items-center justify-between">
                   <h2 className="text-2xl font-semibold">{items.length} item{items.length === 1 ? "" : "s"}</h2>
                   <button onClick={clear} className="text-sm font-semibold text-muted-foreground hover:text-destructive">Clear basket</button>
@@ -82,8 +79,8 @@ function BasketPage() {
                   })}
                 </ul>
                 <Link to="/products" className="mt-5 inline-flex text-sm font-semibold text-primary hover:underline">+ Add more products</Link>
-              </div>
-              <EnquiryForm basketItems={snapshot} onSubmitted={() => { setSubmitted(true); }} />
+              </div>}
+              <EnquiryForm basketItems={items} onSubmitted={() => { setSubmitted(true); clear(); }} />
             </div>
           )}
         </div>
