@@ -19,7 +19,8 @@ export function mergeItem(items: BasketItem[], item: BasketItem): BasketItem[] {
   const i = items.findIndex((x) => x.slug === item.slug && x.optionId === item.optionId);
   if (i === -1) return [...items, item];
   const next = [...items];
-  next[i] = { ...next[i], quantity: next[i].quantity + item.quantity, notes: item.notes || next[i].notes };
+  const cur = next[i]!;
+  next[i] = { ...cur, quantity: cur.quantity + item.quantity, notes: item.notes || cur.notes };
   return next;
 }
 
