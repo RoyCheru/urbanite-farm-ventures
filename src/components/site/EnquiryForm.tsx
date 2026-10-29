@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const inputCls = "w-full rounded-xl border border-input bg-card px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/30 aria-[invalid=true]:border-destructive";
 
-function Field({ label, name, error, optional, children }: { label: string; name: string; error?: string; optional?: boolean; children: ReactNode }) {
+function Field({ label, name, error, optional, children }: { label: string; name: string; error?: string | undefined; optional?: boolean; children: ReactNode }) {
   return (
     <div>
       <label htmlFor={name} className="mb-1.5 block text-sm font-semibold">{label}{optional && <span className="font-normal text-muted-foreground"> (optional)</span>}</label>
@@ -31,6 +31,7 @@ export function EnquiryForm({ basketItems, onSubmitted, defaultBuyer = "individu
   const [f, setF] = useState({ name: "", phone: "", email: "", buyerType: defaultBuyer, businessName: "", location: "", frequency: "once", message: "" });
   const [rows, setRows] = useState<Row[]>([emptyRow()]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const err = (k: string): string | undefined => errors[k];
   const [status, setStatus] = useState<"idle" | "submitting" | "error">("idle");
   const [done, setDone] = useState<{ ref: string; data: Enquiry } | null>(null);
 
@@ -102,28 +103,28 @@ export function EnquiryForm({ basketItems, onSubmitted, defaultBuyer = "individu
 
       <fieldset className="space-y-5">
         <legend className="font-display text-xl font-semibold">1. About you</legend>
-        <Field label="I am buying as" name="buyerType" error={errors.buyerType}>
-          <select id="buyerType" value={f.buyerType} onChange={set("buyerType")} className={inputCls} aria-invalid={!!errors.buyerType}>
+        <Field label="I am buying as" name="buyerType" error={err("buyerType")}>
+          <select id="buyerType" value={f.buyerType} onChange={set("buyerType")} className={inputCls} aria-invalid={!!err("buyerType")}>
             {BUYER_TYPES.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
           </select>
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Full name" name="name" error={errors.name}>
-            <input id="name" autoComplete="name" value={f.name} onChange={set("name")} maxLength={100} className={inputCls} aria-invalid={!!errors.name} />
+          <Field label="Full name" name="name" error={err("name")}>
+            <input id="name" autoComplete="name" value={f.name} onChange={set("name")} maxLength={100} className={inputCls} aria-invalid={!!err("name")} />
           </Field>
           {isBusiness && (
-            <Field label="Business name" name="businessName" error={errors.businessName}>
-              <input id="businessName" autoComplete="organization" value={f.businessName} onChange={set("businessName")} maxLength={120} className={inputCls} aria-invalid={!!errors.businessName} />
+            <Field label="Business name" name="businessName" error={err("businessName")}>
+              <input id="businessName" autoComplete="organization" value={f.businessName} onChange={set("businessName")} maxLength={120} className={inputCls} aria-invalid={!!err("businessName")} />
             </Field>
           )}
-          <Field label="Phone / WhatsApp" name="phone" error={errors.phone}>
-            <input id="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="0712 345 678" value={f.phone} onChange={set("phone")} maxLength={16} className={inputCls} aria-invalid={!!errors.phone} />
+          <Field label="Phone / WhatsApp" name="phone" error={err("phone")}>
+            <input id="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="0712 345 678" value={f.phone} onChange={set("phone")} maxLength={16} className={inputCls} aria-invalid={!!err("phone")} />
           </Field>
-          <Field label="Email" name="email" optional error={errors.email}>
-            <input id="email" type="email" autoComplete="email" value={f.email} onChange={set("email")} maxLength={255} className={inputCls} aria-invalid={!!errors.email} />
+          <Field label="Email" name="email" optional error={err("email")}>
+            <input id="email" type="email" autoComplete="email" value={f.email} onChange={set("email")} maxLength={255} className={inputCls} aria-invalid={!!err("email")} />
           </Field>
-          <Field label="Town / delivery area" name="location" error={errors.location}>
-            <input id="location" placeholder="e.g. Nakuru Town" value={f.location} onChange={set("location")} maxLength={120} className={inputCls} aria-invalid={!!errors.location} />
+          <Field label="Town / delivery area" name="location" error={err("location")}>
+            <input id="location" placeholder="e.g. Nakuru Town" value={f.location} onChange={set("location")} maxLength={120} className={inputCls} aria-invalid={!!err("location")} />
           </Field>
           <Field label="How often do you need supply?" name="frequency">
             <select id="frequency" value={f.frequency} onChange={set("frequency")} className={inputCls}>
@@ -141,25 +142,25 @@ export function EnquiryForm({ basketItems, onSubmitted, defaultBuyer = "individu
           <p className="text-sm text-muted-foreground">Your {basketItems.length} basket item{basketItems.length === 1 ? "" : "s"} will be included in this request.</p>
         ) : (
           <>
-            {errors.items && <p className="text-xs font-medium text-destructive">{errors.items}</p>}
+            {err("items") && <p className="text-xs font-medium text-destructive">{err("items")}</p>}
             {rows.map((r, i) => {
               const p = getProduct(r.slug);
               return (
                 <div key={i} className="grid gap-3 rounded-2xl border border-border bg-background p-4 sm:grid-cols-[1.4fr_1fr_0.7fr_auto] sm:items-end">
-                  <Field label="Product" name={`items.${i}.slug`} error={errors[`items.${i}.slug`]}>
-                    <select id={`items.${i}.slug`} value={r.slug} onChange={(e) => { const np = getProduct(e.target.value); setRow(i, { slug: e.target.value, optionId: np?.options[0]?.id ?? "" }); }} className={inputCls} aria-invalid={!!errors[`items.${i}.slug`]}>
+                  <Field label="Product" name={`items.${i}.slug`} error={err(`items.${i}.slug`)}>
+                    <select id={`items.${i}.slug`} value={r.slug} onChange={(e) => { const np = getProduct(e.target.value); setRow(i, { slug: e.target.value, optionId: np?.options[0]?.id ?? "" }); }} className={inputCls} aria-invalid={!!err(`items.${i}.slug`)}>
                       <option value="">Select…</option>
                       {PRODUCTS.map((x) => <option key={x.slug} value={x.slug}>{x.name}</option>)}
                     </select>
                   </Field>
-                  <Field label={p?.optionLabel ?? "Option"} name={`items.${i}.optionId`} error={errors[`items.${i}.optionId`]}>
-                    <select id={`items.${i}.optionId`} value={r.optionId} disabled={!p} onChange={(e) => setRow(i, { optionId: e.target.value })} className={cn(inputCls, "disabled:opacity-50")} aria-invalid={!!errors[`items.${i}.optionId`]}>
+                  <Field label={p?.optionLabel ?? "Option"} name={`items.${i}.optionId`} error={err(`items.${i}.optionId`)}>
+                    <select id={`items.${i}.optionId`} value={r.optionId} disabled={!p} onChange={(e) => setRow(i, { optionId: e.target.value })} className={cn(inputCls, "disabled:opacity-50")} aria-invalid={!!err(`items.${i}.optionId`)}>
                       {!p && <option value="">—</option>}
                       {p?.options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
                     </select>
                   </Field>
-                  <Field label={`Qty${p ? ` (${p.unit})` : ""}`} name={`items.${i}.quantity`} error={errors[`items.${i}.quantity`]}>
-                    <input id={`items.${i}.quantity`} type="number" min={1} inputMode="numeric" value={r.quantity} onChange={(e) => setRow(i, { quantity: e.target.value })} className={inputCls} aria-invalid={!!errors[`items.${i}.quantity`]} />
+                  <Field label={`Qty${p ? ` (${p.unit})` : ""}`} name={`items.${i}.quantity`} error={err(`items.${i}.quantity`)}>
+                    <input id={`items.${i}.quantity`} type="number" min={1} inputMode="numeric" value={r.quantity} onChange={(e) => setRow(i, { quantity: e.target.value })} className={inputCls} aria-invalid={!!err(`items.${i}.quantity`)} />
                   </Field>
                   <button type="button" onClick={() => setRows((s) => s.filter((_, j) => j !== i))} disabled={rows.length === 1} aria-label="Remove product"
                     className="grid h-12 w-12 place-items-center rounded-xl border border-border text-muted-foreground transition hover:border-destructive hover:text-destructive disabled:opacity-40">
@@ -173,8 +174,8 @@ export function EnquiryForm({ basketItems, onSubmitted, defaultBuyer = "individu
             </button>
           </>
         )}
-        <Field label="Additional details" name="message" optional error={errors.message}>
-          <textarea id="message" rows={4} value={f.message} onChange={set("message")} maxLength={1000} placeholder="Preferred delivery dates, pickup or delivery, sizes, etc." className={inputCls} aria-invalid={!!errors.message} />
+        <Field label="Additional details" name="message" optional error={err("message")}>
+          <textarea id="message" rows={4} value={f.message} onChange={set("message")} maxLength={1000} placeholder="Preferred delivery dates, pickup or delivery, sizes, etc." className={inputCls} aria-invalid={!!err("message")} />
         </Field>
       </fieldset>
 
