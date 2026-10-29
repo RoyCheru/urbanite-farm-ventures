@@ -8,10 +8,11 @@ export function whatsappLink(message = "Hello Urbanite Farm Ventures, I'd like t
 }
 
 export const NAV = [
-  { href: "#home", label: "Home" },
-  { href: "#about", label: "About Us" },
-  { href: "#products", label: "Products" },
-  { href: "#bulk", label: "Bulk Orders" },
-  { href: "#blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
-];
+  { to: "/", label: "Home" },
+  { to: "/products", label: "Products" },
+  { to: "/bulk-orders", label: "Bulk Orders" },
+  { to: "/about", label: "About Us" },
+  { to: "/contact", label: "Contact & FAQs" },
+] as const;
+
+export const LOCATION = "Solai, Nakuru County, Kenya";
