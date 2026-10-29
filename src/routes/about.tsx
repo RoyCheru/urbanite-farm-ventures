@@ -73,12 +73,12 @@ function AboutPage() {
             ))}
           </div>
         </div>
-        {open !== null && (
-          <div role="dialog" aria-modal="true" aria-label={GALLERY[open].alt} onClick={() => setOpen(null)} className="fixed inset-0 z-[60] grid place-items-center bg-deep/90 p-5">
+        {open !== null && GALLERY[open] && (
+          <div role="dialog" aria-modal="true" aria-label={GALLERY[open]!.alt} onClick={() => setOpen(null)} className="fixed inset-0 z-[60] grid place-items-center bg-deep/90 p-5">
             <button aria-label="Close" className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full bg-deep-foreground/10 text-deep-foreground"><X /></button>
             <figure onClick={(e) => e.stopPropagation()} className="max-w-4xl">
-              <img src={GALLERY[open].src} alt={GALLERY[open].alt} className="max-h-[80vh] w-full rounded-2xl object-contain" />
-              <figcaption className="mt-3 text-center text-sm text-deep-foreground/80">{GALLERY[open].alt}</figcaption>
+              <img src={GALLERY[open]!.src} alt={GALLERY[open]!.alt} className="max-h-[80vh] w-full rounded-2xl object-contain" />
+              <figcaption className="mt-3 text-center text-sm text-deep-foreground/80">{GALLERY[open]!.alt}</figcaption>
             </figure>
           </div>
         )}

@@ -51,10 +51,10 @@ function ProductPage() {
   const { slug } = Route.useLoaderData();
   const p = getProduct(slug)!;
   const { add } = useBasket();
-  const [optionId, setOptionId] = useState(p.options[0].id);
+  const [optionId, setOptionId] = useState(p.options[0]?.id ?? "");
   const [qty, setQty] = useState(p.minQty);
   const [notes, setNotes] = useState("");
-  const option = p.options.find((o) => o.id === optionId)!;
+  const option = p.options.find((o) => o.id === optionId) ?? p.options[0]!;
 
   function addToBasket() {
     if (!Number.isInteger(qty) || qty < p.minQty) return;

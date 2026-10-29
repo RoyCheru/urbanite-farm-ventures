@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
-export type BasketItem = { slug: string; optionId: string; quantity: number; notes?: string };
+export type BasketItem = { slug: string; optionId: string; quantity: number; notes?: string | undefined };
 
 type BasketCtx = {
   items: BasketItem[];
