@@ -6,7 +6,7 @@ import farmer from "@/assets/farmer.jpg";
 import { PHONE_DISPLAY, WHATSAPP_NUMBER, whatsappLink } from "@/lib/site";
 import { PRODUCTS } from "@/lib/catalog";
 import { ProductCard } from "@/components/site/ProductCard";
-import { LinkButton, SectionHeading, SocialLinks, WhatsAppButton, WhatsAppIcon } from "@/components/site/ui";
+import { LinkButton, SectionHeading, SocialLinks, WhatsAppIcon } from "@/components/site/ui";
 
 export const Route = createFileRoute("/")({
   head: () => ({
