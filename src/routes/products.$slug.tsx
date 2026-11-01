@@ -1,8 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { CheckCircle2, Minus, Plus, ShoppingBasket, Info } from "lucide-react";
-import { PRODUCTS, getProduct, priceLabel } from "@/lib/catalog";
+import { CheckCircle2, Minus, Plus, ShoppingBasket, Info, BadgeCheck } from "lucide-react";
+import { PRODUCTS, getProduct, priceLabel, optionPriceLabel } from "@/lib/catalog";
 import { useBasket } from "@/lib/basket";
 import { PageHeader } from "@/components/site/layout";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -54,7 +54,9 @@ function ProductPage() {
   const [optionId, setOptionId] = useState(p.options[0]?.id ?? "");
   const [qty, setQty] = useState(p.minQty);
   const [notes, setNotes] = useState("");
+  const [imgIdx, setImgIdx] = useState(0);
   const option = p.options.find((o) => o.id === optionId) ?? p.options[0]!;
+  const optionPrice = optionPriceLabel(option);
 
   function addToBasket() {
     if (!Number.isInteger(qty) || qty < p.minQty) return;
