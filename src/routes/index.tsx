@@ -3,9 +3,18 @@ import { Link } from "@tanstack/react-router";
 import { MapPin, Phone, Egg, Truck, ShieldCheck, Leaf, Search, MessageCircle, CheckCircle2, Store, Hotel, UtensilsCrossed, Users, ArrowRight, ShoppingBasket } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import farmer from "@/assets/farmer.jpg";
+import farmSunrise from "@/assets/farm-sunrise.jpg";
+import eggsCollection from "@/assets/eggs-collection.jpg";
+import eggSorting from "@/assets/egg-sorting.jpg";
+import broilersFeeding from "@/assets/broilers-feeding.jpg";
+import birdCheck from "@/assets/bird-check.jpg";
+import farmFeeding from "@/assets/farm-feeding.jpg";
+import pigsWeaners from "@/assets/pigs-weaners.jpg";
+import produceCrate from "@/assets/produce-crate.jpg";
 import { PHONE_DISPLAY, WHATSAPP_NUMBER, whatsappLink } from "@/lib/site";
 import { PRODUCTS } from "@/lib/catalog";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Gallery } from "@/components/site/Gallery";
 import { LinkButton, SectionHeading, SocialLinks, WhatsAppIcon } from "@/components/site/ui";
 
 export const Route = createFileRoute("/")({
@@ -30,6 +39,7 @@ function Index() {
       <Products />
       <Bulk />
       <About />
+      <FarmGlimpse />
       <HowToOrder />
       <Contact />
     </>
