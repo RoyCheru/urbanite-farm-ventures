@@ -102,14 +102,21 @@ function ProductPage() {
               <fieldset>
                 <legend className="mb-3 text-sm font-semibold">{p.optionLabel}</legend>
                 <div className="flex flex-wrap gap-2">
-                  {p.options.map((o) => (
-                    <button key={o.id} type="button" aria-pressed={optionId === o.id} onClick={() => setOptionId(o.id)}
-                      className={cn("rounded-xl border px-4 py-2.5 text-sm font-semibold transition", optionId === o.id ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-primary")}>
-                      {o.label}
-                    </button>
-                  ))}
+                  {p.options.map((o) => {
+                    const oPrice = optionPriceLabel(o);
+                    return (
+                      <button key={o.id} type="button" aria-pressed={optionId === o.id} onClick={() => setOptionId(o.id)}
+                        className={cn("rounded-xl border px-4 py-2.5 text-left text-sm font-semibold transition", optionId === o.id ? "border-primary bg-primary text-primary-foreground" : "border-border hover:border-primary")}>
+                        <span className="block">{o.label}</span>
+                        {oPrice && <span className={cn("block text-xs font-normal", optionId === o.id ? "text-primary-foreground/80" : "text-muted-foreground")}>{oPrice}</span>}
+                      </button>
+                    );
+                  })}
                 </div>
                 {option.hint && <p className="mt-2 text-xs text-muted-foreground">{option.hint}</p>}
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {optionPrice ? <>Price: <span className="font-semibold text-foreground">{optionPrice}</span> — confirmed when we respond to your enquiry.</> : "Price is confirmed when we respond to your enquiry."}
+                </p>
               </fieldset>
 
               <div>
