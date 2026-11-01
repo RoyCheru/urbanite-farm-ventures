@@ -75,9 +75,24 @@ function ProductPage() {
       <PageHeader eyebrow={p.category} title={p.name} crumbs={[{ label: "Products", to: "/products" }, { label: p.name }]} />
       <section className="py-14 md:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2">
-          <img src={p.image} alt={p.name} width={912} height={736} className="aspect-[5/4] w-full rounded-3xl object-cover shadow-card" />
           <div>
-            <p className="inline-flex rounded-full bg-secondary px-4 py-1.5 text-sm font-bold text-secondary-foreground">{priceLabel(p)}</p>
+            <img src={p.images[imgIdx]!.src} alt={p.images[imgIdx]!.alt} width={1024} height={1024} className="aspect-[5/4] w-full rounded-3xl object-cover shadow-card" />
+            {p.images.length > 1 && (
+              <div className="mt-4 grid grid-cols-4 gap-3">
+                {p.images.map((img, i) => (
+                  <button key={img.alt} type="button" onClick={() => setImgIdx(i)} aria-label={`View photo: ${img.alt}`} aria-pressed={imgIdx === i}
+                    className={cn("aspect-square overflow-hidden rounded-xl border-2 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", imgIdx === i ? "border-primary" : "border-transparent opacity-70 hover:opacity-100")}>
+                    <img src={img.src} alt="" loading="lazy" width={1024} height={1024} className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="inline-flex rounded-full bg-secondary px-4 py-1.5 text-sm font-bold text-secondary-foreground">{priceLabel(p)}</p>
+              <p className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-1.5 text-sm font-semibold text-muted-foreground"><BadgeCheck className="h-4 w-4 text-primary" />{p.availability}</p>
+            </div>
             {p.description.map((d) => <p key={d} className="mt-4 leading-relaxed text-muted-foreground">{d}</p>)}
             <ul className="mt-6 space-y-2">
               {p.highlights.map((h) => <li key={h} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />{h}</li>)}
