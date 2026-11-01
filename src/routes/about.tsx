@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { HeartHandshake, Leaf, MapPin, ShieldCheck, X } from "lucide-react";
+import { HeartHandshake, Leaf, MapPin, ShieldCheck } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import eggs from "@/assets/eggs.jpg";
 import broilers from "@/assets/broilers.jpg";
@@ -9,6 +8,7 @@ import produce from "@/assets/produce.jpg";
 import farmer from "@/assets/farmer.jpg";
 import { PageHeader } from "@/components/site/layout";
 import { SectionHeading } from "@/components/site/ui";
+import { Gallery } from "@/components/site/Gallery";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -34,7 +34,6 @@ const GALLERY = [
 ];
 
 function AboutPage() {
-  const [open, setOpen] = useState<number | null>(null);
   return (
     <>
       <PageHeader eyebrow="About Us" title="Rooted in Solai, growing with Kenya" crumbs={[{ label: "About Us" }]} />
@@ -64,24 +63,8 @@ function AboutPage() {
       <section className="bg-secondary py-14 md:py-20">
         <div className="mx-auto max-w-7xl px-5">
           <SectionHeading eyebrow="Gallery" title="Around the farm" />
-          <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3">
-            {GALLERY.map((g, i) => (
-              <button key={g.alt} onClick={() => setOpen(i)} className="group relative aspect-square overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                <img src={g.src} alt={g.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/80 to-transparent p-3 text-left text-xs font-semibold text-deep-foreground opacity-0 transition group-hover:opacity-100">{g.alt}</span>
-              </button>
-            ))}
-          </div>
+          <Gallery images={GALLERY} className="mt-12 md:grid-cols-3" />
         </div>
-        {open !== null && GALLERY[open] && (
-          <div role="dialog" aria-modal="true" aria-label={GALLERY[open]!.alt} onClick={() => setOpen(null)} className="fixed inset-0 z-[60] grid place-items-center bg-deep/90 p-5">
-            <button aria-label="Close" className="absolute right-5 top-5 grid h-11 w-11 place-items-center rounded-full bg-deep-foreground/10 text-deep-foreground"><X /></button>
-            <figure onClick={(e) => e.stopPropagation()} className="max-w-4xl">
-              <img src={GALLERY[open]!.src} alt={GALLERY[open]!.alt} className="max-h-[80vh] w-full rounded-2xl object-contain" />
-              <figcaption className="mt-3 text-center text-sm text-deep-foreground/80">{GALLERY[open]!.alt}</figcaption>
-            </figure>
-          </div>
-        )}
       </section>
 
       <section className="py-14 md:py-20">
