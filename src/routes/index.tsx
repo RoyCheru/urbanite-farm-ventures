@@ -174,6 +174,28 @@ function About() {
   );
 }
 
+const FARM_PHOTOS = [
+  { src: farmSunrise, alt: "The farm at sunrise, poultry houses and fields" },
+  { src: eggsCollection, alt: "Collecting eggs in the layer house" },
+  { src: broilersFeeding, alt: "Broilers feeding in a clean poultry house" },
+  { src: pigsWeaners, alt: "Checking on weaner pigs in the piggery" },
+  { src: eggSorting, alt: "Sorting and packing eggs into trays" },
+  { src: farmFeeding, alt: "Feeding free-range chickens in the farmyard" },
+  { src: birdCheck, alt: "Health check on a broiler chicken" },
+  { src: produceCrate, alt: "A crate of freshly harvested vegetables" },
+];
+
+function FarmGlimpse() {
+  return (
+    <section id="gallery" className="py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-5">
+        <SectionHeading eyebrow="A Glimpse Into Our Farm" title="Daily life and work in Solai" text="Poultry housing, egg collection, livestock care and the everyday work behind every order. Click any photo to view it larger." />
+        <Gallery images={FARM_PHOTOS} className="mt-14" />
+      </div>
+    </section>
+  );
+}
+
 function HowToOrder() {
   const steps = [
     { Icon: Search, t: "Browse & choose", d: "Pick products, options and quantities from our catalogue." },

@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { HeartHandshake, Leaf, MapPin, ShieldCheck, X } from "lucide-react";
+import { HeartHandshake, Leaf, MapPin, ShieldCheck } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import eggs from "@/assets/eggs.jpg";
 import broilers from "@/assets/broilers.jpg";
@@ -9,6 +8,7 @@ import produce from "@/assets/produce.jpg";
 import farmer from "@/assets/farmer.jpg";
 import { PageHeader } from "@/components/site/layout";
 import { SectionHeading } from "@/components/site/ui";
+import { Gallery } from "@/components/site/Gallery";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
